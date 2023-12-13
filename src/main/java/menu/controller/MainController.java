@@ -34,6 +34,9 @@ public class MainController {
         outputView.printEmptyLine();
         // 4
         setRecommendMenuOfWeek(coaches);
+        // 5
+        outputView.printMenuRecommendResult(coaches);
+        outputView.printEmptyLine();
     }
 
     private List<Coach> getCoaches() {
