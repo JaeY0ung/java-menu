@@ -25,10 +25,6 @@ public class Coach {
         return dislikeMenus;
     }
 
-//    public void setRecommendMenusForWeek(List<String> recommendMenusForWeek) {
-//        this.recommendMenusForWeek = recommendMenusForWeek;
-//    }
-
     public void addRecommendMenusForWeek(String menu) {
         this.recommendMenusForWeek.add(menu);
     }

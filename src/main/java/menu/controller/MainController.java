@@ -10,7 +10,9 @@ import static menu.exception.ExceptionMessage.NUM_OF_DISLIKE_MENU_IS_OVER_RANGE;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import menu.domain.Coach;
 import menu.domain.MenuCateGory;
 import menu.view.InputView;
@@ -153,7 +155,6 @@ public class MainController {
 
     private MenuCateGory getRandomMenuCategory() {
         int pickNum = Randoms.pickUniqueNumbersInRange(1, 5, 1).get(0);
-        // TODO: 처음에 한 주에 두번 초과 선택한 카테고리인지 확인
         if (pickNum == 1) {
             return MenuCateGory.JAPANESE;
         }
