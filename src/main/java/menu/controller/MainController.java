@@ -32,6 +32,8 @@ public class MainController {
         // 3
         setCoachesDislikeMenus();
         outputView.printEmptyLine();
+        // 4
+        setRecommendMenuOfWeek(coaches);
     }
 
     private List<Coach> getCoaches() {
@@ -98,6 +100,57 @@ public class MainController {
 //            }
         return Arrays.asList(menus);
     }
+
+    private void setRecommendMenuOfWeek(List<Coach> coaches) {
+        // 월~금
+        for (int i = 0; i < 5; i++) {
+            setRecommendMenuOfDayForAllCoaches(coaches);
+        }
     }
 
+    private void setRecommendMenuOfDayForAllCoaches(List<Coach> coaches) {
+        MenuCateGory cateGory = getRandomMenuCategory();
+        for (int i = 0; i < coaches.size(); i++) {
+            Coach coach = coaches.get(i);
+            String menu = getRecommendMenuOfDayForOneCoach(coach, cateGory);
+            coaches.get(i).addRecommendMenusForWeek(menu);
+        }
+    }
+
+    private String getRecommendMenuOfDayForOneCoach(
+            Coach coach, MenuCateGory cateGory) {
+        List<String> dislikeMenus = coach.getDislikeMenus();
+        String menu = getRandomMenu(cateGory);
+        if (dislikeMenus.contains(menu)) {
+            // 다시
+        }
+        return menu;
+    }
+
+    private MenuCateGory getRandomMenuCategory() {
+        int pickNum = Randoms.pickUniqueNumbersInRange(1, 5, 1).get(0);
+        // TODO: 처음에 한 주에 두번 초과 선택한 카테고리인지 확인
+        if (pickNum == 1) {
+            return MenuCateGory.JAPANESE;
+        }
+        if (pickNum == 2) {
+            return MenuCateGory.KOREAN;
+        }
+        if (pickNum == 3) {
+            return MenuCateGory.CHINESE;
+        }
+        if (pickNum == 4) {
+            return MenuCateGory.ASIAN;
+        }
+        if (pickNum == 5) {
+            return MenuCateGory.WESTERN;
+        }
+        // TODO: 언제인지 고민하기
+        throw new IllegalArgumentException("고를 수 있는 카테고리가 없습니다.");
+    }
+
+    private String getRandomMenu(MenuCateGory cateGory) {
+        List<String> menus = Arrays.asList(cateGory.getMenus());
+        return Randoms.shuffle(menus).get(0);
+    }
 }
