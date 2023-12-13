@@ -107,14 +107,33 @@ public class MainController {
     }
 
     private void setRecommendMenuOfWeek(List<Coach> coaches) {
-        // 월~금
+        Map<MenuCateGory, Integer> cateGoryCount = new HashMap<>();
+        // 월~금 : 처음에 한 주에 두 번 초과 선택한 카테고리인지 확인
         for (int i = 0; i < 5; i++) {
-            setRecommendMenuOfDayForAllCoaches(coaches);
+            cateGoryCount = validateSameCategoryOverRange(cateGoryCount);
         }
     }
 
-    private void setRecommendMenuOfDayForAllCoaches(List<Coach> coaches) {
+    private Map<MenuCateGory, Integer> validateSameCategoryOverRange(Map<MenuCateGory, Integer> cateGoryCount) {
         MenuCateGory cateGory = getRandomMenuCategory();
+        if (cateGoryCount.containsKey(cateGory)) {
+            int count = cateGoryCount.get(cateGory);
+            if (count >= 2) {
+                validateSameCategoryOverRange(cateGoryCount);
+            }
+            if (count < 2) {
+                cateGoryCount.put(cateGory, count + 1);
+            }
+        }
+        if (!cateGoryCount.containsKey(cateGory)) {
+            cateGoryCount.put(cateGory, 1);
+        }
+        setRecommendMenuOfDayForAllCoaches(coaches, cateGory);
+        return cateGoryCount;
+    }
+
+    private void setRecommendMenuOfDayForAllCoaches(List<Coach> coaches, MenuCateGory cateGory) {
+        Map<MenuCateGory, Integer> cateGoryCount = new HashMap<>();
         for (int i = 0; i < coaches.size(); i++) {
             Coach coach = coaches.get(i);
             String menu = getRecommendMenuOfDayForOneCoach(coach, cateGory);
