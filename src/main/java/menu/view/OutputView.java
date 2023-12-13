@@ -21,6 +21,11 @@ public class OutputView {
             System.out.printf("[ %s | %s ]\n", name, menusFormat);
         }
     }
+
+    public void printEnd() {
+        System.out.println("추천을 완료했습니다.");
+    }
+
     public void printEmptyLine() {
         System.out.println();
     }
