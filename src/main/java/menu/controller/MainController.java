@@ -8,6 +8,8 @@ import static menu.exception.ExceptionMessage.NUMBER_OF_COACH_IS_UNDER_RANGE;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import menu.domain.Coach;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -15,15 +17,20 @@ public class MainController {
 
     private final OutputView outputView = new OutputView();
     private final InputView inputView = new InputView();
-    private List<String> coachName;
+    private Map<Coach, String> coachesDislikeFoods;
+    private List<Coach> coaches;
 
     public void run() {
         outputView.printStart();
         outputView.printEmptyLine();
-        coachName = getCoachNames();
+
+        List<String> coachNames = getCoachNames();
+        setCoaches(coachNames);
+
+
     }
 
-    public List<String> getCoachNames() {
+    private List<String> getCoachNames() {
         String input = inputView.getCoachNames();
         if (input.startsWith(",") || input.endsWith(",")) {
             System.out.println(ENDS_WITH_COMMA_OR_STARTS_WITH_COMMA.getMessage());
@@ -51,6 +58,12 @@ public class MainController {
             }
         }
         return Arrays.asList(coachNames);
+    }
+
+    private void setCoaches(List<String> coachNames) {
+        for (String name : coachNames) {
+            coaches.add(new Coach(name));
+        }
     }
 
 }
